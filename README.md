@@ -1,3 +1,52 @@
+
+
+make install
+
+make test1
+
+make clean1
+make uninstall
+
+
+## 使用s3fs 对接mino 进行改造
+1. -o use_path_request_style
+  - 增加以上参数
+
+## 修改通用名字，而不是用AWS相关的名字
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: s3-config
+data:
+  ENDPOINT: <YOUR-S3-BUCKET-NAME>
+  AK: <YOUR-AWS-TECH-USER-ACCESS-KEY>
+  SK: <YOUR-AWS-TECH-USER-SECRET>
+```
+
+
+
+
+
+
+## 注意事项：
+
+如果对于性能有很强的需求并且要求和传统文件系统的体验一致，那么此方案并不适用，可以考虑使用AWS的EBS来做kubernetes的持久存储。
+
+一般情况下S3不能提供像本地文件系统一样的功能。具体如下：
+
+随机写或追加写需要重写整个文件；
+由于网络延迟，所以元数据的操作如列出目录等的性能较差；
+最终一致性会暂时产生中间数据（AMAZON S3数据一致性模型）；
+没有文件和目录的原子重命名；
+安装相同存储桶的多个客户端之间没有协调；
+没有硬链接；
+
+
+
+
+
 ## Shared storage with S3 backend
 The storage is definitely the most complex and important part of an application setup, once this part is 
 completed, 80% of the tasks are completed.

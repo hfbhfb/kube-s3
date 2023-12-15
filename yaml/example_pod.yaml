@@ -6,8 +6,9 @@ spec:
   containers:
   - image: nginx
     name: s3-test-container
-    securityContext:
-      privileged: true
+    imagePullPolicy: IfNotPresent
+    # securityContext:
+    #   privileged: true
     volumeMounts:
     - name: mntdatas3fs
       mountPath: /var/s3:shared

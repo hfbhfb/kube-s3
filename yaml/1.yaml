@@ -1,13 +1,10 @@
-apiVersion: apps/v1
+apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
   labels:
     app: s3-provider
   name: s3-provider
 spec:
-  selector:
-    matchLabels:
-      app: s3-provider
   template:
     metadata:
       labels:
@@ -15,8 +12,7 @@ spec:
     spec:
       containers:
       - name: s3fuse
-        image: hefabao/my-kube-s3:v0.1
-        # command: ["/bin/sh","-c","sleep 9999;"]
+        image: freegroup/kube-s3
         lifecycle:
           preStop:
             exec:
